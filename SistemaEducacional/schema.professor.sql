@@ -14,7 +14,7 @@ CREATE TABLE alunos (
 	pais varchar(20)
 );
 
-ALTER TABLE alunos ALTER COLUMN cpf TYPE varchar(15)
+ALTER TABLE alunos ALTER COLUMN cpf TYPE varchar(15);
 
 CREATE TABLE telefones (
 	cpf varchar(15) REFERENCES alunos,
@@ -29,7 +29,7 @@ CREATE TABLE emails (
 	dominio varchar(20)
 );
 
-ALTER TABLE emails ALTER COLUMN email TYPE varchar(64)
+ALTER TABLE emails ALTER COLUMN email TYPE varchar(64);
 
 CREATE TABLE departamentos (
  	id_dpto serial PRIMARY KEY,
@@ -90,7 +90,7 @@ INSERT INTO departamentos(sigla_dpto, nome_dpto) VALUES
     ('ENGE', 'ENGENHARIA'),
     ('HUMA', 'HUMANAS');
 	
-ALTER TABLE cursos ALTER COLUMN nome_curso TYPE varchar(50)
+ALTER TABLE cursos ALTER COLUMN nome_curso TYPE varchar(50);
 
 INSERT INTO cursos (nome_curso, id_dpto) VALUES
 ('Medicina', 1),
@@ -120,23 +120,7 @@ INSERT INTO matriculas (cpf,status,id_curso) VALUES
 ('34567890124', 'ativo',11),
 ('98765432108', 'formado',2);
 
-INSERT INTO matriculas (cpf,status,id_curso) VALUES
-('12345678901', 'ativo', 1),
-('98765432109', 'inativo', 1),
-('23456789012', 'formado',3),
-('87654321098', 'ativo',5),
-('34567890123', 'inativo',5),
-('12345678902', 'formado',7),
-('98765432108', 'ativo',12),
-('23456789013', 'formado',7),
-('87654321097', 'inativo',10),
-('34567890124', 'formado',10),
-('34567890124', 'ativo',11),
-('98765432108', 'formado',2);
-
-select * from matriculas
-
-ALTER TABLE disciplinas ALTER COLUMN nome_disciplina TYPE varchar(50)
+ALTER TABLE disciplinas ALTER COLUMN nome_disciplina TYPE varchar(50);
 
 INSERT INTO disciplinas (nome_disciplina, optativa) VALUES
 ('Banco de Dados', false),
@@ -154,9 +138,7 @@ INSERT INTO disciplinas (nome_disciplina, optativa) VALUES
 ('Hematologia', false),
 ('Arquitetura de Computadores', false),
 ('Ensaios Mecanicos', false),
-('Metrologia', false)
-
-// falta enserir os dados na tabela emails
+('Metrologia', false);
 
 INSERT INTO emails VALUES
 ('12345678901', 'aaaa', '@gmail.com'),
@@ -170,11 +152,84 @@ INSERT INTO emails VALUES
 ('87654321097', 'mmmm', '@gmail.com'),
 ('34567890124', 'nnnn', '@gmail.com'),
 ('34567890124', 'oooo', '@gmail.com'),
-('98765432108', 'zzzz', '@gmail.com')
+('98765432108', 'zzzz', '@gmail.com');
 
-INSERT INTO telefones VALUES (
-  
-)
+INSERT INTO telefones VALUES 
+('12345678901', 15, 94050405, 29),
+('98765432109', 11, 94050405, 29),
+('23456789012', 11, 94050405, 29),
+('87654321098', 15, 94050405, 29),
+('34567890123', 15, 94050405, 28),
+('12345678902', 14, 94050405, 29),
+('98765432108', 15, 94050405, 29),
+('23456789013', 12, 94050405, 29),
+('87654321097', 15, 94050405, 29),
+('34567890124', 15, 94050405, 29),
+('34567890124', 16, 94050405, 29),
+('98765432108', 15, 94050405, 29);
+
+INSERT INTO cursos_disciplinas VALUES 
+(12, 16),
+(4, 3),
+(5, 8),
+(9, 9),
+(11, 2),
+(10, 6),
+(2, 5),
+(1, 15),
+(3, 13);
+
+INSERT INTO matriculas_disciplinas VALUES 
+(24, 16),
+(4, 3),
+(5, 8),
+(19, 9),
+(11, 2),
+(6, 14),
+(2, 7),
+(18, 15),
+(23, 13);
+
+-- Comandos DQL - Data Query Language
+
+--Dado o RA ou o Nome do Aluno, buscar no BD todos os demais dados do aluno.
+SELECT * FROM alunos WHERE cpf = (SELECT cpf FROM matriculas where ra = 1);
+SELECT * FROM alunos WHERE nome = 'Lucas Santos';
+
+--Dado o nome de um departamento, exibir o nome de todos os cursos associados a ele.
+SELECT * FROM cursos WHERE id_dpto = (SELECT id_dpto FROM departamentos WHERE nome_dpto = 'SAUDE');
+
+--Dado o nome de uma disciplina, exibir a qual ou quais cursos ela pertence.
+
+
+--Dado o CPF de um aluno, exibir quais disciplinas ele está cursando.
+
+
+--Filtrar todos os alunos matriculados em um determinado curso.
+
+
+--Filtrar todos os alunos matriculados em determinada disciplina.
+
+
+--Filtrar alunos formados.
+
+
+--Filtrar alunos ativos.
+
+
+--Apresentar a quantidade de alunos ativos por curso.
+
+
+--Apresentar a quantidade de alunos ativos por disciplina.
+
+
+
+
+
+
+
+
+
 
 
 
