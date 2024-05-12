@@ -190,6 +190,18 @@ INSERT INTO matriculas_disciplinas VALUES
 (18, 15),
 (23, 13);
 
+INSERT INTO matriculas_disciplinas VALUES 
+('7', '12');
+
+INSERT INTO alunos VALUES
+(12345600000, 'Messi', 25, 'Rua A', '123', 'Centro', 'New York', 'SP', 12345678, 'Estados unidos');
+
+INSERT INTO matriculas (cpf,status,id_curso) VALUES
+('12345600000', 'ativo', 1);
+
+INSERT INTO matriculas_disciplinas VALUES 
+(25, 3);
+
 -- Comandos DQL - Data Query Language
 
 --Dado o RA ou o Nome do Aluno, buscar no BD todos os demais dados do aluno.
@@ -200,16 +212,30 @@ SELECT * FROM alunos WHERE nome = 'Lucas Santos';
 SELECT * FROM cursos WHERE id_dpto = (SELECT id_dpto FROM departamentos WHERE nome_dpto = 'SAUDE');
 
 --Dado o nome de uma disciplina, exibir a qual ou quais cursos ela pertence.
-
+SELECT nome_curso FROM cursos
+INNER JOIN cursos_disciplinas ON cursos.id_curso = cursos_disciplinas.id_curso
+INNER JOIN disciplinas ON cursos_disciplinas.id_disciplina = disciplinas.id_disciplina
+WHERE disciplinas.nome_disciplina = 'Libras'
 
 --Dado o CPF de um aluno, exibir quais disciplinas ele está cursando.
-
+SELECT DISTINCT d.nome_disciplina
+FROM matriculas_disciplinas md
+INNER JOIN matriculas m ON md.ra = m.ra
+INNER JOIN disciplinas d ON md.id_disciplina = d.id_disciplina
+WHERE m.cpf = '98765432108' AND m.status = 'ativo';
 
 --Filtrar todos os alunos matriculados em um determinado curso.
-
+SELECT nome FROM alunos
+INNER JOIN matriculas ON alunos.cpf = matriculas.cpf AND matriculas.status = 'ativo'
+INNER JOIN cursos ON matriculas.id_curso = cursos.id_curso
+WHERE cursos.nome_curso = 'Sociologia'
 
 --Filtrar todos os alunos matriculados em determinada disciplina.
-
+SELECT nome FROM alunos a
+INNER JOIN matriculas m ON a.cpf = m.cpf AND m.status = 'ativo'
+INNER JOIN matriculas_disciplinas md ON m.ra = md.ra
+INNER JOIN disciplinas d ON md.id_disciplina = d.id_disciplina
+WHERE d.nome_disciplina = 'Bioquimica'
 
 --Filtrar alunos formados.
 
@@ -221,7 +247,6 @@ SELECT * FROM cursos WHERE id_dpto = (SELECT id_dpto FROM departamentos WHERE no
 
 
 --Apresentar a quantidade de alunos ativos por disciplina.
-
 
 
 
