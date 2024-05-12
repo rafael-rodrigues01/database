@@ -238,15 +238,25 @@ INNER JOIN disciplinas d ON md.id_disciplina = d.id_disciplina
 WHERE d.nome_disciplina = 'Bioquimica'
 
 --Filtrar alunos formados.
-
+SELECT nome FROM alunos a
+INNER JOIN matriculas m ON a.cpf = m.cpf
+WHERE m.status = 'formado';
 
 --Filtrar alunos ativos.
-
+SELECT nome FROM alunos a
+INNER JOIN matriculas m ON a.cpf = m.cpf
+WHERE m.status = 'ativo';
 
 --Apresentar a quantidade de alunos ativos por curso.
-
+SELECT COUNT(nome) FROM alunos a
+INNER JOIN matriculas m ON a.cpf = m.cpf
+WHERE m.status = 'ativo';
 
 --Apresentar a quantidade de alunos ativos por disciplina.
+SELECT COUNT(nome) FROM alunos a
+INNER JOIN matriculas m ON a.cpf = m.cpf AND m.status = 'ativo'
+INNER JOIN matriculas_disciplinas md ON m.ra = md.ra
+INNER JOIN disciplinas d ON md.id_disciplina = d.id_disciplina
 
 
 
